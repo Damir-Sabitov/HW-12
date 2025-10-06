@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selene import Browser, Config
 
+
 from utils.attach import add_screenshot, add_logs, add_html, add_video
 
 def pytest_addoption(parser):
@@ -17,7 +18,7 @@ def configuring_browser(setup_browser):
     browser.config.timeout = 10
 
 @pytest.fixture(scope="function", autouse=True)
-def setup_browser():
+def setup_browser(request):
     browser_name=request.config.getoption('--browser')
     options = Options()
     selenoid_capabilities = {
