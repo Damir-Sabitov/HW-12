@@ -8,7 +8,7 @@ from selene import Browser, Config
 from utils.attach import add_screenshot, add_logs, add_html, add_video
 
 def pytest_addoption(parser):
-    parser.addoption('--browser', help='браузер,в котром открываем', choices=['chrome', 'firefox'], default='chrome')
+    parser.addoption('--browser-version',  default='128.0')
 
 
 @pytest.fixture(scope="function", autouse=True)
@@ -19,11 +19,11 @@ def configuring_browser(setup_browser):
 
 @pytest.fixture(scope="function", autouse=True)
 def setup_browser(request):
-    browser_name=request.config.getoption('--browser')
+    browser_version=request.config.getoption('--browser-version')
     options = Options()
     selenoid_capabilities = {
-        "browserName": browser_name,
-        "browserVersion": "128.0",
+        "browserName": "chrome",
+        "browserVersion": browser_version,
         "selenoid:options": {
             "enableVNC": True,
             "enableVideo": True
