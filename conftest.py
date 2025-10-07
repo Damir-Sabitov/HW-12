@@ -14,8 +14,7 @@ def pytest_addoption(parser):
 def load_env():
     load_dotenv()
 
-selenoid_login = os.getenv("SELENOID_LOGIN")
-selenoid_pass = os.getenv("SELENOID_PASS")
+
 
 @pytest.fixture(scope="function", autouse=True)
 def configuring_browser(setup_browser):
@@ -36,6 +35,10 @@ def setup_browser(request):
         }
     }
     options.capabilities.update(selenoid_capabilities)
+
+    selenoid_login = os.getenv("SELENOID_LOGIN")
+    selenoid_pass = os.getenv("SELENOID_PASS")
+
     driver = webdriver.Remote(
         command_executor=f"https://{selenoid_login}:{selenoid_pass}@selenoid.autotests.cloud/wd/hub",
         options=options
